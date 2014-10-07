@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="app/styles/main.css">
   </head>
-  <body>
+
+  <body ng-app="RaceTrack">
     <div class="container">
       <div class="row">
         <h1 class="text-center">RaceTrack</h1>
@@ -14,18 +15,26 @@
       <div ng-view=""></div>
     </div>
 
+  <!-- Utility Libraries -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src='bower_components/lodash/dist/lodash.underscore.js'></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
-    <script src='bower_components/lodash/dist/lodash.underscore.js'></script>
-    <script src='bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
+  <!-- Angular Stuff -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+
+  <!-- Maps Stuff -->
+  <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+  <script src='bower_components/angular-google-maps/dist/angular-google-maps.js'></script>
 
 
-    <script src="app/app.js">
-    <script src="app/controllers/mainCtrl.js">
+
+
+  <!-- Our stuff -->
+  <script src="app/app.js"></script>
+  <script src="app/controllers/mainCtrl.js"></script>
+
 
   </body>
 </html>

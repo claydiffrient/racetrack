@@ -1,5 +1,9 @@
-angular.module('RaceTrack')
-  .controller('MainCtrl', ['$scope', function ($scope) {
+'use strict';
+
+var app = angular.module('RaceTrack');
+
+app.controller('MainCtrl', ['$scope', function ($scope) {
+
 
     $scope.map = {
         center: {
