@@ -1,12 +1,11 @@
 'use strict';
 
-console.log('got here');
 var app = angular.module('RaceTrack', [
     'ngRoute',
-    'google-maps'
+    'google-maps',
+    'firebase'
   ]);
 
-console.log(app);
 
 app.config(function ($routeProvider) {
     $routeProvider
