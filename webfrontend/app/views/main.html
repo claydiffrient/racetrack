@@ -1,6 +1,15 @@
 <h2>Biker Location</h2>
-<google-map center="map.center" zoom="map.zoom"></google-map>
+<google-map center="map.center" zoom="map.zoom">
+  <polyline path="$scope.bikerLine.path" stroke="$scope.bikerLine." visible='$scope.bikerLine.visible'
+            geodesic='$scope.bikerLine.geodesic' fit="false" editable="$scope.bikerLine.editable"
+            draggable="$scope.bikerLine.draggable" icons='$scope.bikerLine.icons'>
+  </polyline>
+</google-map>
 
+ <ul>
+  <li ng-repeat="coords in bikerLine.path">
+    Lat: {{coords.latitude}} --- Long: {{coords.longitude}} --- Accuracy: {{coords.accuracy}}
+  </li>
 
 <h2>Drone Camera</h2>
 <span>Insert Drone Camera Here</span>
