@@ -15,8 +15,8 @@ app.factory('CoordService', ['$http', '$firebase', function ($http, $firebase) {
   // Get the coordinates for the center of the map.
   var getMapCoordinates = function () {
     return {
-      latitude: 40.24,
-      longitude: -111.65
+      lat: 40.240808101408405,
+      lng: -111.65780154067245
     }; //_.last(bikerArray);
   };
 
