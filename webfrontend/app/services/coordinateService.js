@@ -5,8 +5,8 @@ app.factory('CoordService', ['$http', '$firebase', function ($http, $firebase) {
   var bikerFirebase = new Firebase("https://racetrack.firebaseio.com/bikerGPS");
   var droneFirebase = new Firebase("https://racetrack.firebaseio.com/droneGPS");
 
-  var bikerSync = $firebase(bikerFirebase.limit(100));
-  var droneSync = $firebase(droneFirebase);
+  var bikerSync = $firebase(bikerFirebase.limit(200));
+  var droneSync = $firebase(droneFirebase.limit(100));
 
   //var bikerArray = bikerSync.$asArray();
 
@@ -28,13 +28,18 @@ app.factory('CoordService', ['$http', '$firebase', function ($http, $firebase) {
 
   var getData = function () {
     return bikerSync.$asArray();
+  };
+
+  var getDroneData = function () {
+    return droneSync.$asArray();
   }
 
 
   return {
     getMapCoordinates: getMapCoordinates,
     getBikerLine: getBikerLine,
-    getData: getData
+    getData: getData,
+    getDroneData: getDroneData
   };
 
 }]);
