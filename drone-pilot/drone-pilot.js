@@ -27,6 +27,7 @@ var State = {
   },
 
   'updateHeading': function(data) {
+    //console.log(data);
     if (!data.demo) return;
     this.heading = (90 - data.demo.rotation.yaw) * Math.PI / 180.0;
     if (this.drone == null || this.biker == null) return;
@@ -76,7 +77,7 @@ var State = {
     if (turnRate > 1) {
       turnRate = 1;
     }
-    turnRate *= 0.1; // TODO: tuning value
+    turnRate *= 1.0; // TODO: tuning value
 
     // select speed
     var forwardRange = delta.range * Math.cos(dheading);
@@ -90,12 +91,17 @@ var State = {
     if (speed > 1) {
       speed = 1;
     }
-    speed *= 0.2; // TODO: tuning value
+    speed *= 0.08; // TODO: tuning value
     console.log("turn", turnDirection, "at", turnRate + ", move", direction, "at", speed);
 
     // alter drone's motion appropriately
+    if (dheading > Math.PI / 4) {
+      client.stop()
+    }
+    else {
+      client[direction](speed);
+    }
     client[turnDirection](turnRate);
-    client[direction](speed);
 
     console.log("");
   }
@@ -110,21 +116,25 @@ firebase.child("droneGPS").on("child_added", State.updateDrone.bind(State))
 // update from navdata
 client.on('navdata', State.updateHeading.bind(State));
 
-State.updateHeading({'demo': {'rotation': {'yaw': 0}}}); // north
-setTimeout(function() { State.updateHeading({'demo': {'rotation': {'yaw': 90}}}); }, 5000) // east
-setTimeout(function() { State.updateHeading({'demo': {'rotation': {'yaw': 180}}}); }, 6000) // south
-setTimeout(function() { State.updateHeading({'demo': {'rotation': {'yaw': 270}}}); }, 7000) // west
-setTimeout(function() { State.updateHeading({'demo': {'rotation': {'yaw': -270}}}); }, 8000) // east
-setTimeout(function() { State.updateHeading({'demo': {'rotation': {'yaw': -180}}}); }, 9000) // south
-setTimeout(function() { State.updateHeading({'demo': {'rotation': {'yaw': -90}}}); }, 10000) // west
-
-//client.takeoff()
-
 // try and update every so often (but only if there's something new to work
 // with
 var controlLoop = function() {
   State.update();
-  setTimeout(controlLoop, 200);
+  setTimeout(controlLoop, 1000);
 };
 
-setTimeout(controlLoop, 200);
+client.takeoff();
+client
+  .after(1000, function() {
+    this.up(0.5);
+  })
+  .after(5000, function() {
+    this.stop();
+    setTimeout(controlLoop, 200);
+  });
+
+process.on('SIGINT', function() {
+  client.stop();
+  client.land();
+  process.exit();
+});
